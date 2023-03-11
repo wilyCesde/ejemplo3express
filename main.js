@@ -38,10 +38,24 @@ function mylogin(req, res, next) {
 }
 
 //Middlwares si es verdadesro no lo deja pasar
+
+
 app.use(mylogin)
 app.use((req, res, next) => {
   if (estado) {
     next()
+  }
+});
+
+//otro filtro para usuario y contraseña
+
+app.use((req, res, next) => {
+  let resultado = searchUser('ar', '10');
+  if (resultado != undefined) {
+    next();
+
+  } else {
+    next(new Error('usuario y / o contraseña inválidos'));
   }
 });
 
