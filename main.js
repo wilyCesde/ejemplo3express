@@ -22,7 +22,7 @@ let users = [
 ]
 
 function searchUser(username, password) {
-  let userFind = users.Find(user => user.username == username && user.password == password);
+  let userFind = users.find(user => user.username == username && user.password == password);
   return userFind;
 }
 
@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 //otro filtro para usuario y contraseña
 
 app.use((req, res, next) => {
-  let resultado = searchUser('ar', '10');
+  let resultado = searchUser('dc', '4');
   if (resultado != undefined) {
     next();
 
