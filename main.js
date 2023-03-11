@@ -37,27 +37,38 @@ function mylogin(req, res, next) {
   }
 }
 
+
+function findUserLogin(password, username) {
+  return (req, res, next) => {
+    let encontrar = users.find(usr => usr.username == username && usr.password == password)
+    if (encontrar != undefined) {
+      next();
+    }
+  }
+};
+
+
 //Middlwares si es verdadesro no lo deja pasar
 
 
-app.use(mylogin)
-app.use((req, res, next) => {
-  if (estado) {
-    next()
-  }
-});
+// app.use(mylogin)
+// app.use((req, res, next) => {
+//   if (estado) {
+//     next()
+//   }
+// });
 
-//otro filtro para usuario y contraseña
+// //otro filtro para usuario y contraseña
 
-app.use((req, res, next) => {
-  let resultado = searchUser('dc', '4');
-  if (resultado != undefined) {
-    next();
+// app.use((req, res, next) => {
+//   let resultado = searchUser('dc', '4');
+//   if (resultado != undefined) {
+//     next();
 
-  } else {
-    next(new Error('usuario y / o contraseña inválidos'));
-  }
-});
+//   } else {
+//     next(new Error('usuario y / o contraseña inválidos'));
+// //   }
+// });
 
 // primer metodo para que el server escuche 
 app.listen(port, () => {
@@ -66,19 +77,24 @@ app.listen(port, () => {
 
 //Endpoinst
 
+app.get('/login', findUserLogin('4', 'dc'), (req, res) => {
+  res.send('has iniciado sesión')
+});
+
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
-app.post('/', (req, res) => {
+app.post('/login', (req, res) => {
   res.send('Got a POST request')
 });
 
-app.put('/user', (req, res) => {
-  res.send('Got a PUT request at /user')
+app.put('/login', (req, res) => {
+  res.send('Got a PUT request at /login')
 });
 
-app.delete('/user', (req, res) => {
-  res.send('Got a DELETE request at /user')
+app.delete('/login', (req, res) => {
+  res.send('Got a DELETE request at /login')
 });
 
